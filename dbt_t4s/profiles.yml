@@ -1,14 +1,25 @@
-my_dbt_project:
+dbt_t4s:
   target: dev
   outputs:
     dev:
       type: snowflake
-      account: <account_identifier>
-      user: <your_username>
-      password: <your_password>
-      role: <your_role>
-      database: <your_database>
-      warehouse: <your_warehouse>
-      schema: <your_schema>
-      threads: 4
+      account:  yi96825.uae-north.azure
+
+      # User/password auth
+      user: "{{ env_var('USERNAME') }}"
+      password: "{{ env_var('PASSWORD') }}"
+
+      role: ACCOUNTADMIN
+      database: SALES_DB_SNOWFLAKE
+      warehouse: COMPUTE_WH
+      schema: STAGE
+      threads: 1
       client_session_keep_alive: False
+      query_tag: [anything]
+
+      # optional
+      connect_retries: 0 # default 0
+      connect_timeout: 10 # default: 10
+      retry_on_database_errors: False # default: false
+      retry_all: False  # default: false
+      reuse_connections: False # default: false (available v1.4+)
